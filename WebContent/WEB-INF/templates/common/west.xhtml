@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+<h:outputStylesheet name="west.css" library="css" />
+</h:head>
+<body>
+
+	<ui:composition>
+		<h:form id="formwest">		
+			
+			<p:dataScroller value="#{userBean.listActions}" var="action"
+					chunkSize="10" scrollHeight="255" mode="inline">
+					<f:facet name="header">
+						<h:panelGrid columns="2">
+							<h:outputText value="Actions" style="margin-right: 75%;" />
+							<p:commandButton type="button" title="Ajouter"
+								onclick="PF('diag_ajout_action').show()"
+								update=":diag_ajout_action" icon="ui-icon-plus"
+								style="margin-left: 85%;" />
+						</h:panelGrid>
+					</f:facet>
+
+					<h:panelGrid columns="3" columnClasses="logo,detail ">
+						<p:graphicImage value="#{userBean.convertToFile(action.user)}"
+							width="40px" height="40px" />
+
+						<p:outputPanel>
+							<h:panelGrid columns="2" cellpadding="1" cellspacing="2">
+								<h:outputText value="Title" />
+								<h:outputText value="#{action.title}" style="font-weight: bold"  />
+
+								<h:outputText value="d_creation" />
+								<h:outputText value="#{action.creationDate}"
+									style="font-weight: bold">
+									<f:convertDateTime pattern="dd-MM-yyyy" />
+								</h:outputText>
+
+							</h:panelGrid>
+						</p:outputPanel>
+						<h:panelGrid columns="1" cellpadding="1" cellspacing="2">
+							<p:commandLink update=":actionDetail"
+								oncomplete="PF('actionDialog').show()" title="View Detail"
+								styleClass="ui-icon ui-icon-search"
+								style="float:right;margin-right:2px">
+								<f:setPropertyActionListener value="#{action}"
+									target="#{userBean.selectedAction}" />
+							</p:commandLink>
+							<p:commandLink update=":actionDetail"
+								oncomplete="PF('suppactionDialog').show()"
+								title="supprimer l'action" styleClass="ui-icon ui-icon-trash"
+								style="float:right;margin-right:2px">
+								<f:setPropertyActionListener value="#{action}"
+									target="#{userBean.selectedAction}" />
+							</p:commandLink>
+						</h:panelGrid>
+					</h:panelGrid>
+				</p:dataScroller>
+
+
+				<p:dataScroller id="datascroller2" value="#{userBean.listAFaire}" var="afaire"
+					chunkSize="10" mode="inline"  scrollHeight="185" >
+					<f:facet name="header">
+						<h:panelGrid columns="2">
+							<h:outputText value="A_Faire" style="margin-right: 75%;" />
+							<p:commandButton type="button"
+								 title="Ajouter"
+								onclick="PF('diag_ajout_action2').show()"
+								update=":diag_ajout_action" icon="ui-icon-plus"
+								style="margin-left: 85%;" />
+						</h:panelGrid>
+					</f:facet>
+
+					<h:panelGrid columns="3" columnClasses="logo,detail ">
+						<p:graphicImage value="#{userBean.convertToFile(afaire.user)}"
+							width="40px" height="40px" />
+
+						<p:outputPanel>
+							<h:panelGrid columns="2" cellpadding="1" cellspacing="2"
+								width="120px">
+								<h:outputText value="Title" />
+								<h:outputText value="#{afaire.title}" style="font-weight: bold" />
+
+							</h:panelGrid>
+						</p:outputPanel>
+						<h:panelGrid columns="1" cellpadding="1" cellspacing="2">
+							<p:commandLink update=":actionDetail"
+								oncomplete="PF('actionDialog').show()" title="View Detail"
+								styleClass="ui-icon ui-icon-search"
+								style="float:right;margin-right:2px">
+								<f:setPropertyActionListener value="#{afaire}"
+									target="#{userBean.selectedAction}" />
+							</p:commandLink>
+							<p:commandLink update=":actionDetail"
+								oncomplete="PF('suppactionDialog').show()"
+								title="supprimer l'action" styleClass="ui-icon ui-icon-trash"
+								style="float:right;margin-right:2px">
+								<f:setPropertyActionListener value="#{afaire}"
+									target="#{userBean.selectedAction}" />
+							</p:commandLink>
+						</h:panelGrid>
+					</h:panelGrid>
+				</p:dataScroller>
+				
+		</h:form>
+		
+		<!-- /////////////////////////////////// diag action info /////////////////////////////////// -->
+	<p:dialog header="Action info" widgetVar="actionDialog"
+		showEffect="blind" hideEffect="explode" resizable="false">
+		<p:outputPanel id="actionDetail" style="text-align:center;">
+			<p:panelGrid columns="2" columnClasses="label,value">
+				<f:facet name="header">
+					<h:outputText
+						value="créer par: #{userBean.selectedAction.user.firstName} #{userBean.selectedAction.user.lastName}" />
+
+				</f:facet>
+
+				<h:outputText value="Title" />
+				<h:outputText value="#{userBean.selectedAction.title}" />
+
+				<h:outputText value="Descreption:" />
+				<h:outputText value="#{userBean.selectedAction.description}" />
+
+				<h:outputText value="Creation date" />
+				<h:outputText value="#{userBean.selectedAction.creationDate}">
+					<f:convertDateTime pattern="dd-MM-yyyy" />
+				</h:outputText>
+
+				<h:outputText value="Realization date" />
+				<h:outputText value="#{userBean.selectedAction.realization_date}">
+					<f:convertDateTime pattern="dd-MM-yyyy" />
+				</h:outputText>
+			</p:panelGrid>
+		</p:outputPanel>
+	</p:dialog>
+		
+	</ui:composition>
+</body>
+</html>

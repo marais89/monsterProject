@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	 <h:outputStylesheet name="login.css" library="css" />
+	 <h:outputScript name="login.js" library="js"></h:outputScript>
+</h:head>
+<h:body>
+<h:form id="formSignUn" >
+<p:messages id="messages" />
+<a  href="/monster/login.xhtml" class="signup">Sign In</a>
+      
+	<div class="login">
+	<h1>Sign Up</h1>
+	<center>
+   <p:outputPanel autoUpdate="true">
+							<h:graphicImage value="#{userBean.convertToFile(userBean.user)}"
+								width="120" id="upfile" height="120"
+								style="cursor:pointer;postion:absolute;-webkit-border-radius: 100px;-moz-border-radius: 100px;border-radius: 100px;"
+								onclick="$('.ui-photo').click();">
+							</h:graphicImage>
+						</p:outputPanel>
+						<p:fileUpload id="ui-photo" auto="true" styleClass="ui-photo" 	style="display:none"
+							fileUploadListener="#{userBean.handleFileUpload}" label="Photo"
+							mode="advanced" multiple="false" sizeLimit="10000000"
+							allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+					</center>
+					
+    	<p:inputText type="text" name="u" placeholder="UserFirstname" styleClass="inputText" required="required" value="#{userBean.user.firstName}"/>
+    	<p:inputText type="text" name="u" placeholder="UserLastName" styleClass="inputText" required="required" value="#{userBean.user.lastName}"/>
+    	<p:inputText type="text" name="u" placeholder="E-mail" styleClass="inputText" required="required" value="#{userBean.user.email}"/>
+    	<p:inputText type="text" name="u" placeholder="Mobile Phone" styleClass="inputText" required="required" value="#{userBean.user.phoneNumber}"/>
+    	<p:inputText type="text" name="u" placeholder="Poste" styleClass="inputText" required="required" value="#{userBean.user.poste}"/>
+        <p:password type="password" name="p" placeholder="Password" required="required" styleClass="inputText" value="#{userBean.user.password}" />
+      
+        <p:commandButton type="submit" styleClass="btn btn-primary btn-block btn-large" action="#{userBean.ajouterUser()}" value="Let me in" >
+        <p:ajax  update=":formSignUn:messages" />
+        </p:commandButton>
+  
+  		
+</div>
+ </h:form>
+
+</h:body>
+</html>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:b="http://www.springframework.org/schema/beans"
+
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-4.1.xsd
+http://www.springframework.org/schema/security
+http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+
+	<security:http pattern="/resources/**" security="none" />
+	<security:http pattern="/login.xhtml*" security="none" />
+	<security:http pattern="/SignUp.xhtml*" security="none" />
+
+
+	<security:http use-expressions="true">
+		<!-- refers to http://docs.spring.io/spring-security/site/docs/3.0.x/reference/el-access.html -->
+		<security:intercept-url pattern="/login.xhtml"
+			access="anonymous" />
+		<security:intercept-url pattern="/resources/**"
+			access="anonymous" />
+		<security:csrf disabled="true" />
+		<security:intercept-url pattern="/j_spring_security_check"
+			access="anonymous" />
+			<security:intercept-url pattern="/j_spring_security_logout"
+			access="anonymous" />
+		<security:intercept-url pattern="/**" access="authenticated" />
+		<security:form-login login-page="/login.xhtml" 
+			login-processing-url="/j_spring_security_check" 
+			authentication-failure-url="/login.xhtml" default-target-url="/pages/container.xhtml"
+			always-use-default-target="true"
+			username-parameter="username" password-parameter="password" />
+			<security:logout logout-success-url="/login.xhtml" delete-cookies="JSESSIONID"  />
+	</security:http>
+	
+	
+	<b:bean id="userDetailsService" class="service.UserDetailsServiceImpl"></b:bean>
+	
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="userDetailsService">
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+<!-- 	 <security:authentication-manager>  -->
+<!-- 	 <security:authentication-provider>  -->
+<!-- 	 <security:jdbc-user-service  -->
+<!-- 	 data-source-ref="dataSource"  -->
+<!-- 	users-by-username-query="select email,password,stat from users where  -->
+<!-- 		email=?"   -->
+<!-- 	authorities-by-username-query="select email, role from users where  -->
+<!-- 		email=?" /> -->
+<!-- 	 </security:authentication-provider> -->
+<!-- 	 </security:authentication-manager>  -->
+
+<!-- 	<security:authentication-manager> -->
+<!-- 		<security:authentication-provider> -->
+<!-- 			<security:user-service> -->
+<!-- 				<security:user name="mohamedali.raies@sofrecom.com" -->
+<!-- 					password="azerty123" authorities="ROLE_USER, ROLE_ADMIN" /> -->
+<!-- 				<security:user name="bob" password="bobspassword" -->
+<!-- 					authorities="ROLE_USER" /> -->
+<!-- 			</security:user-service> -->
+<!-- 		</security:authentication-provider> -->
+<!-- 	</security:authentication-manager> -->
+
+</beans>

@@ -1,0 +1,551 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<meta http-equiv="X-UA-Compatible" content="IE=5,8,9" />
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<h:outputStylesheet name="home.css" library="css" />
+	<h:outputStylesheet name="animation.css" library="css" />
+<h:outputScript library="js" name="home1.js" />
+	<title>monster</title>
+
+</h:head>
+<h:body>
+
+	
+	<p:layout fullPage="true">
+
+		<p:layoutUnit position="west" size="235" header="Left"
+			resizable="false" closable="true" collapsible="true">
+			<h:form id="formWest">
+				<p:dataScroller value="#{userBean.listActions}" var="action"
+					chunkSize="10" scrollHeight="300" mode="inline">
+					<f:facet name="header">
+						<h:panelGrid columns="2">
+							<h:outputText value="Actions" style="margin-right: 75%;" />
+							<p:commandButton type="button" title="Ajouter"
+								onclick="PF('diag_ajout_action').show()"
+								update=":diag_ajout_action" icon="ui-icon-plus"
+								style="margin-left: 85%;" />
+						</h:panelGrid>
+					</f:facet>
+
+					<h:panelGrid columns="3" columnClasses="logo,detail ">
+						<p:graphicImage value="#{userBean.convertToFile(action.user)}"
+							width="40px" height="40px" />
+
+						<p:outputPanel>
+							<h:panelGrid columns="2" cellpadding="1" cellspacing="2">
+								<h:outputText value="Title" />
+								<h:outputText value="#{action.title}" style="font-weight: bold"  />
+
+								<h:outputText value="d_creation" />
+								<h:outputText value="#{action.creationDate}"
+									style="font-weight: bold">
+									<f:convertDateTime pattern="dd-MM-yyyy" />
+								</h:outputText>
+
+							</h:panelGrid>
+						</p:outputPanel>
+						<h:panelGrid columns="1" cellpadding="1" cellspacing="2">
+							<p:commandLink update=":actionDetail"
+								oncomplete="PF('actionDialog').show()" title="View Detail"
+								styleClass="ui-icon ui-icon-search"
+								style="float:right;margin-right:2px">
+								<f:setPropertyActionListener value="#{action}"
+									target="#{userBean.selectedAction}" />
+							</p:commandLink>
+							<p:commandLink update=":actionDetail"
+								oncomplete="PF('suppactionDialog').show()"
+								title="supprimer l'action" styleClass="ui-icon ui-icon-trash"
+								style="float:right;margin-right:2px">
+								<f:setPropertyActionListener value="#{action}"
+									target="#{userBean.selectedAction}" />
+							</p:commandLink>
+						</h:panelGrid>
+					</h:panelGrid>
+				</p:dataScroller>
+
+
+				<p:dataScroller id="datascroller2" value="#{userBean.listAFaire}" var="afaire"
+					chunkSize="10" mode="inline"  scrollHeight="220" >
+					<f:facet name="header">
+						<h:panelGrid columns="2">
+							<h:outputText value="A_Faire" style="margin-right: 75%;" />
+							<p:commandButton type="button"
+								 title="Ajouter"
+								onclick="PF('diag_ajout_action2').show()"
+								update=":diag_ajout_action" icon="ui-icon-plus"
+								style="margin-left: 85%;" />
+						</h:panelGrid>
+					</f:facet>
+
+					<h:panelGrid columns="3" columnClasses="logo,detail ">
+						<p:graphicImage value="#{userBean.convertToFile(afaire.user)}"
+							width="40px" height="40px" />
+
+						<p:outputPanel>
+							<h:panelGrid columns="2" cellpadding="1" cellspacing="2"
+								width="120px">
+								<h:outputText value="Title" />
+								<h:outputText value="#{afaire.title}" style="font-weight: bold" />
+
+							</h:panelGrid>
+						</p:outputPanel>
+						<h:panelGrid columns="1" cellpadding="1" cellspacing="2">
+							<p:commandLink update=":actionDetail"
+								oncomplete="PF('actionDialog').show()" title="View Detail"
+								styleClass="ui-icon ui-icon-search"
+								style="float:right;margin-right:2px">
+								<f:setPropertyActionListener value="#{afaire}"
+									target="#{userBean.selectedAction}" />
+							</p:commandLink>
+							<p:commandLink update=":actionDetail"
+								oncomplete="PF('suppactionDialog').show()"
+								title="supprimer l'action" styleClass="ui-icon ui-icon-trash"
+								style="float:right;margin-right:2px">
+								<f:setPropertyActionListener value="#{afaire}"
+									target="#{userBean.selectedAction}" />
+							</p:commandLink>
+						</h:panelGrid>
+					</h:panelGrid>
+				</p:dataScroller>
+
+
+			</h:form>
+		</p:layoutUnit>
+
+<p:layoutUnit position="east" size="220" header="Right"
+			resizable="false" closable="true" collapsible="true">
+		
+			<h:form id="formEast">
+		
+	<ul class="grid">	
+		<c:forEach var="i" begin="1"  end="#{userBean.listUsers.size()}">
+			 <li>
+				<a href="#">
+					<p:graphicImage value="#{userBean.convertToFile(userBean.listUsers.get(i-1))}" width="48px" height="50px"/>
+				</a>
+			</li>	
+	   </c:forEach>
+   </ul>
+   	
+   <p:calendar  mode="inline" locale="fr" style="position: absolute; bottom: 0;left: 0; right: 0" />
+			
+			</h:form>
+			</p:layoutUnit>
+
+		<p:layoutUnit position="center">
+			<h:form id="formCenter">
+				<p:growl id="messages"></p:growl>
+				<!-- 		<p:cache region="testcache" key="toolbar"> -->
+				<p:toolbar>
+					<p:toolbarGroup align="left">
+	<p:menuButton value="Utilisateurs" >
+        <p:menuitem value="Ajouter utilisateur" onclick="PF('ajouUserDialog').show()" update=":formCenter" icon="ui-icon-plusthick"/>
+        <p:menuitem value="Consulter utilisateur" onclick="PF('diag_consult_users').show()" update=":formCenter" icon="ui-icon-script"/>
+       
+    </p:menuButton>
+    
+    	<p:menuButton value="réunion" >
+        <p:menuitem value="Demarrer une réunion" onclick="PF('diag_ajout_reunion').show()" update=":formCenter" icon="ui-icon-circle-triangle-e"/>
+        <p:menuitem value="statistique réunions" onclick="PF('ajouUserDialog').show()" update=":formCenter" icon="ui-icon-image
+ "/>
+        <p:separator />
+        <p:menuitem value="Participants" onclick="PF('ajouUserDialog').show()" icon="ui-icon-person"/>
+    </p:menuButton>
+						<p:separator />
+
+						<p:commandButton type="button" title="Save" icon="ui-icon-disk" />
+						<p:commandButton type="button" title="Delete" icon="ui-icon-trash" />
+						<p:commandButton type="button" title="Print" icon="ui-icon-print" />
+
+					</p:toolbarGroup>
+
+					<p:toolbarGroup align="right">
+						<p:clock pattern="HH:mm:ss dd.MM.yyyy" mode="server" />
+						<p:separator />
+						<p:inputText style="margin-right:10px" placeholder="Search" />
+						<p:commandButton type="button" value="Quit" icon="ui-icon-close" />
+					</p:toolbarGroup>
+				</p:toolbar>
+				<!-- 				</p:cache> -->
+				<center>
+				<h:panelGrid columns="3" >
+				<h:panelGrid columns="1" >
+				<p:commandButton value="BTN Commande" style="width:150px" ></p:commandButton>
+				<p:commandButton value="BTN Commande" style="width:150px" ></p:commandButton>
+				<p:commandButton value="BTN Commande" style="width:150px" ></p:commandButton>
+				<p:commandButton value="BTN Commande" style="width:150px" ></p:commandButton>
+				</h:panelGrid>
+				<p:panel >
+			<p:poll id="poll" interval="1" update=":formCenter:imageReunion :formCenter:compteur :formCenter:pangridDetail " >
+		<p:graphicImage id="imageReunion" value="#{userBean.photo}" width="200px" height="250px" ></p:graphicImage>
+		  <p:progressBar value="#{userBean.pourcentage}" id="compteur" labelTemplate="#{userBean.pourcentage}%" displayOnly="true" style="width:200px" />
+		</p:poll>
+		</p:panel>
+		<h:panelGrid id="pangridDetail" columns="2" >
+		<p:outputLabel value="Nom : " />
+		<p:outputLabel value="#{userBean.user.lastName} " />
+			<p:outputLabel value="prénom : " />
+			<p:outputLabel value="#{userBean.user.firstName}" />
+				<p:outputLabel value="Poste : " />
+				<p:outputLabel value="Développeur" />
+					<p:outputLabel value="E-mail : " />
+					<p:outputLabel value="#{userBean.user.email}" />
+				
+				</h:panelGrid>
+		</h:panelGrid>
+		</center>
+				<div>
+					<center>
+						<h1 id="time1"></h1>
+					</center>
+				</div>
+				<p:commandButton value="validate" onclick="validation();"></p:commandButton>
+				
+
+			</h:form>
+		</p:layoutUnit>
+
+	</p:layout>
+
+
+	<!-- /////////////////////////////////// diag action info /////////////////////////////////// -->
+	<p:dialog header="Action info" widgetVar="actionDialog"
+		showEffect="blind" hideEffect="explode" resizable="false">
+		<p:outputPanel id="actionDetail" style="text-align:center;">
+			<p:panelGrid columns="2" columnClasses="label,value">
+				<f:facet name="header">
+					<h:outputText
+						value="créer par: #{userBean.selectedAction.user.firstName} #{userBean.selectedAction.user.lastName}" />
+
+				</f:facet>
+
+				<h:outputText value="Title" />
+				<h:outputText value="#{userBean.selectedAction.title}" />
+
+				<h:outputText value="Descreption:" />
+				<h:outputText value="#{userBean.selectedAction.description}" />
+
+				<h:outputText value="Creation date" />
+				<h:outputText value="#{userBean.selectedAction.creationDate}">
+					<f:convertDateTime pattern="dd-MM-yyyy" />
+				</h:outputText>
+
+				<h:outputText value="Realization date" />
+				<h:outputText value="#{userBean.selectedAction.realization_date}">
+					<f:convertDateTime pattern="dd-MM-yyyy" />
+				</h:outputText>
+			</p:panelGrid>
+		</p:outputPanel>
+	</p:dialog>
+
+	<!-- /////////////////////////////////// diag action suppression /////////////////////////////////// -->
+	<p:dialog header="suppression de l'action" widgetVar="suppactionDialog"
+		appendTo="@(body)" showEffect="blind" hideEffect="explode"
+		resizable="false">
+		<h:form id="formsupprim">
+			<p:outputLabel
+				value="Voulez vous supprimer l'action suivant créer par :#{userBean.selectedAction.user.firstName} #{userBean.selectedAction.user.lastName}"></p:outputLabel>
+
+			<center>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Oui" action="#{userBean.deleteaction()}"
+						update=":formCenter:messages :formWest"
+						oncomplete="PF('suppactionDialog').hide()"></p:commandButton>
+					<p:commandButton value="Non"
+						oncomplete="PF('suppactionDialog').hide()"></p:commandButton>
+				</h:panelGrid>
+			</center>
+		</h:form>
+	</p:dialog>
+
+	<!-- /////////////////////////////////// diag user ajout /////////////////////////////////// -->
+	<p:dialog header="Ajouter utilisateur" widgetVar="ajouUserDialog"
+		appendTo="@(body)" showEffect="blind" hideEffect="explode"
+		resizable="false">
+		<h:form id="formajout" enctype="multipart/form-data">
+			<p:panel id="panel">
+
+				<p:messages id="msgs" />
+				<center>
+					<h:panelGrid columns="1" id="panelphoto">
+						<p:outputPanel autoUpdate="true">
+							<h:graphicImage value="#{userBean.convertToFile(userBean.user)}"
+								width="120" id="upfile" height="120"
+								style="cursor:pointer;postion:absolute;-webkit-border-radius: 100px;-moz-border-radius: 100px;border-radius: 100px;"
+								onclick="$('.ui-photo').click();">
+							</h:graphicImage>
+						</p:outputPanel>
+						<p:fileUpload id="ui-photo" auto="true" styleClass="ui-photo" 	style="display:none"
+							fileUploadListener="#{userBean.handleFileUpload}" label="Photo"
+							mode="advanced" multiple="false" sizeLimit="10000000"
+							allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+					</h:panelGrid>
+				</center>
+				<h:panelGrid columns="3" cellpadding="5">
+					<p:outputLabel for="firstname" value="Firstname:" />
+					<p:inputText id="firstname" value="#{userBean.user.firstName}" style="width:123px !important"
+						required="true" label="Firstname">
+						<f:validateLength minimum="3" />
+					</p:inputText>
+					<p:message for="firstname" display="icon" />
+
+					<p:outputLabel for="lastname" value="Lastname:" />
+					<p:inputText id="lastname" value="#{userBean.user.lastName}" style="width:123px !important"
+						label="Lastname" required="true">
+						<f:validateLength minimum="2" />
+						<p:ajax update="msgLastname" event="keyup" />
+					</p:inputText>
+					<p:message for="lastname" id="msgLastname" display="icon" />
+
+					<p:outputLabel for="phone" value="Phone:" />
+					<p:inputMask id="phone" value="#{userBean.user.phoneNumber}" style="width:123px !important"
+						 required="false" />
+					<p:message for="phone" id="msgphone" display="icon" />
+
+					<p:outputLabel for="email" value="Email: " />
+					<p:inputMask id="email" value="#{userBean.user.email}" style="width:123px !important"
+						 required="true" />
+					<p:message for="email" id="emailid" display="icon" />
+
+					<h:outputText value="password: " />
+					<p:password id="feedback" value="#{userBean.user.password}" style="width:123px !important"
+						feedback="true" required="true" />
+					<p:message for="feedback" id="passid" display="icon" />
+
+				</h:panelGrid>
+
+				<center>
+					<h:panelGrid columns="3">
+						<p:commandButton value="Valider"
+							action="#{userBean.ajouterUser()}" update=":formCenter:messages "
+							oncomplete="PF('ajouUserDialog').hide()"></p:commandButton>
+							 <p:commandButton id="btn_reset" value="Reset" type="reset"  />
+						<p:commandButton value="Annuler"
+							oncomplete="PF('ajouUserDialog').hide()"></p:commandButton>
+					</h:panelGrid>
+				</center>
+			</p:panel>
+		</h:form>
+	</p:dialog>
+
+	<p:dialog id="diag_ajout_action" header="Ajout action"
+		widgetVar="diag_ajout_action" modal="true" resizable="false">
+		<h:form id="form_ajout_action">
+
+			<h:panelGrid columns="3">
+				<p:outputLabel for="titleAction" value="titre*:" />
+				<p:inputText id="titleAction" value="#{userBean.action.title}" style="width:123px !important"
+					required="true" label="title">
+					<f:validateLength minimum="4" />
+				</p:inputText>
+				<p:message for="titleAction" display="icon" />
+
+				<p:outputLabel for="description" value="description*:" />
+				<p:inputTextarea id="description" rows="6" cols="33" maxlength="50" style="width:123px !important"
+					value="#{userBean.action.description}" />
+				<p:message for="description" display="icon" />
+
+				<p:outputLabel for="calendar" value="date de realisation*:" />
+				<p:calendar id="calendar" style="width:123px !important" 
+					value="#{userBean.action.realization_date}" required="false"
+					converterMessage="Date Invalide" validatorMessage="Date Invalide"
+					navigator="true">
+					<f:convertDateTime locale="fr" pattern="dd/MM/yy" type="date"  />
+				</p:calendar>
+				<p:message for="calendar" display="icon" />
+
+				<p:outputLabel for="selectoneuser" value="affecté à*:" />
+				<p:selectOneMenu id="selectoneuser" value="#{userBean.action.user}"
+					converter="userConverter" panelStyle="width:123px" effect="fade"
+					var="t" style="width:123px !important" filter="true"
+					filterMatchMode="startsWith">
+					<f:selectItems value="#{userBean.listUsers}" var="user"
+						itemLabel="#{user.firstName} #{user.lastName}" itemValue="#{user}" />
+
+					<p:column style="width:10%">
+						<p:graphicImage value="#{userBean.convertToFile(t)}" width="30px"
+							height="30px" />
+					</p:column>
+
+					<p:column>
+						<h:outputText value="#{t.firstName} #{t.lastName}" />
+					</p:column>
+				</p:selectOneMenu>
+				<p:message for="selectoneuser" display="icon" />
+			</h:panelGrid>
+
+			<center>
+				<p:commandButton value="Valider" style=" width:30%; margin-top:40px"
+					action="#{userBean.ajouterAction('2')}" ajax="false"
+					update=":formCenter:messages :formWest"
+					oncomplete="if (!args.validationFailed){ PF('diag_ajout_action').hide()} ">
+
+				</p:commandButton>
+				 <p:commandButton id="btn_reset" value="Reset" type="reset"/>
+				<p:commandButton value="Annuler" update=":formWest"
+					style="margin-left:5px; width:30%;margin-top:40px"
+					oncomplete="PF('diag_ajout_action').hide()" process="@this" />
+			</center>
+
+		</h:form>
+	</p:dialog>
+	
+	<p:dialog id="diag_ajout_action2" header="Ajout AFaire"
+		widgetVar="diag_ajout_action2" modal="true" resizable="false">
+		<h:form id="form_ajout_action2">
+
+			<h:panelGrid columns="3">
+				<p:outputLabel for="titleAction2" value="titre*:" />
+				<p:inputText id="titleAction2" value="#{userBean.action.title}" style="width:123px !important"
+					required="true" label="title">
+					<f:validateLength minimum="4" />
+				</p:inputText>
+				<p:message for="titleAction2" display="icon" />
+
+				<p:outputLabel for="description2" value="description*:" />
+				<p:inputTextarea id="description2" rows="6" cols="33" maxlength="50" style="width:123px !important"
+					value="#{userBean.action.description}" />
+				<p:message for="description2" display="icon" />
+				
+				<p:outputLabel for="selectoneuser2" value="affecté à*:" />
+				<p:selectOneMenu id="selectoneuser2" value="#{userBean.action.user}" style="width:123px !important"
+					converter="userConverter" panelStyle="width:123px" effect="fade"
+					var="t"  filter="true"
+					filterMatchMode="startsWith">
+					<f:selectItems value="#{userBean.listUsers}" var="user"
+						itemLabel="#{user.firstName} #{user.lastName}" itemValue="#{user}" />
+
+					<p:column style="width:10%">
+						<p:graphicImage value="#{userBean.convertToFile(t)}" width="30px"
+							height="30px" />
+					</p:column>
+
+					<p:column>
+						<h:outputText value="#{t.firstName} #{t.lastName}" />
+					</p:column>
+				</p:selectOneMenu>
+				<p:message for="selectoneuser2" display="icon" />
+			</h:panelGrid>
+
+			<center>
+				<p:commandButton value="Valider" style=" width:30%; margin-top:40px"
+					action="#{userBean.ajouterAction('1')}" ajax="false"
+					update=":formCenter:messages :formWest "
+					oncomplete="if (!args.validationFailed){ PF('diag_ajout_action2').hide()} ">
+
+				</p:commandButton>
+				 <p:commandButton id="btn_reset" value="Reset" type="reset"/>
+				<p:commandButton value="Annuler" update=":formWest"
+					style="margin-left:5px; width:30%;margin-top:40px"
+					oncomplete="PF('diag_ajout_action2').hide()" process="@this" />
+			</center>
+
+		</h:form>
+	</p:dialog>
+	
+	<p:dialog id="diag_consult_users" header="Utilisateurs" width="60%" height="60%"
+		widgetVar="diag_consult_users" modal="true" resizable="false">
+		<h:form id="form_consult_users">
+		
+		<p:dataTable id="users" var="user" value="#{userBean.listUsers}" editable="true" style="margin-bottom:20px">
+       <f:facet name="header">
+           Utilisateurs
+       </f:facet>
+ 
+       <p:ajax event="rowEdit" listener="#{userBean.onRowEdit}" update=":formCenter:messages" />
+       <p:ajax event="rowEditCancel" listener="#{userBean.onRowCancel}" update=":formCenter:messages" />
+ 
+       <p:column headerText="Nom">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{user.firstName}" /></f:facet>
+               <f:facet name="input"><p:inputText id="modelInput" value="#{user.firstName}" style="width:100%"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+ 
+       <p:column headerText="Prenom">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{user.lastName}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{user.lastName}"  style="width:100%" label="prenom"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+ 
+       <p:column headerText="E-mail">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{user.email}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{user.email}"  style="width:100%" label="E-mail"/></f:facet>       
+           </p:cellEditor>
+       </p:column>
+       
+       <p:column headerText="N° Télephone">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{user.phoneNumber}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{user.phoneNumber}"  style="width:100%" label="N° Télephone"/></f:facet>       
+           </p:cellEditor>
+       </p:column>
+ 
+       <p:column style="width:32px">
+           <p:rowEditor />
+       </p:column>
+   </p:dataTable>
+ 
+		</h:form>
+		</p:dialog>
+		
+		<p:dialog id="diag_ajout_reunion" header="Démarrer une réunion" 
+		widgetVar="diag_ajout_reunion" modal="true" resizable="false">
+		<h:form id="form_ajout_reunion">
+		<center>
+		<h:panelGrid columns="1">
+		<p:outputLabel for="description_reunion" value="description:" />
+		
+				<p:inputTextarea id="description_reunion" rows="6" cols="33" maxlength="100" style="width:300px !important;margin-bottom:20px"
+					value="#{userBean.reunion.description}" />
+								
+				</h:panelGrid>
+				</center>
+				<p:pickList id="PojoPickList" value="#{userBean.dualListUser}" var="user"  effect="bounce"
+                itemValue="#{user}" itemLabel="#{user.firstName}"  showSourceControls="true" showTargetControls="true" showCheckbox="true" responsive="true"
+                showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="userConverter">
+ 
+        <f:facet name="sourceCaption">Available</f:facet>
+        <f:facet name="targetCaption">Starting</f:facet>
+ 
+        <p:ajax event="transfer" listener="#{userBean.onTransfer}" update=":formCenter:messages" />
+       
+ 
+        <p:column style="width:10%">
+           <p:graphicImage value="#{userBean.convertToFile(user)}"	width="40px" height="40px" />
+        </p:column>
+ 
+        <p:column style="width:90%;">
+            <h:outputText value="#{user.firstName} #{user.lastName}" />
+        </p:column>
+    </p:pickList>
+    
+    	<center>
+				<p:commandButton value="Demarrer" style=" width:30%; margin-top:40px"
+					action="#{userBean.ajouterReunion()}" ajax="false"
+					update=":formCenter:messages :formCenter "
+					onclick="PF('diag_ajout_reunion').hide() ">
+
+				</p:commandButton>
+				 <p:commandButton id="btn_reset_reunion" value="Reset" type="reset"/>
+				<p:commandButton value="Annuler" update=":formCenter"
+					style="margin-left:5px; width:30%;margin-top:40px" 
+					oncomplete="PF('diag_ajout_reunion').hide()" process="@this" />
+			</center>
+		</h:form>
+		</p:dialog>
+</h:body>
+</html>

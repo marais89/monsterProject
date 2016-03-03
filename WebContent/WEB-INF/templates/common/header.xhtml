@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+     <h:outputStylesheet name="header.css" library="css" />
+</h:head>
+
+<body>
+	<ui:composition>
+		<h:form id="formheader">
+		
+		<div class="menu-outer" >
+    <div class="menu-icon">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+    <nav>
+        <ul>
+           <li><a href="#">Articles</a></li>
+           <li><a href="#">Projects</a></li>
+           <li><a href="#">About</a></li> 
+            <li><a href="#">Contact</a></li>
+       </ul>
+   </nav>
+</div>
+<a class="menu-close" onClick="return true">
+    <div class="menu-icon">
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+</a>
+		
+		
+			<p:toolbar  columns="2" style="background-color:blue; height :50px">
+		
+		<p:toolbarGroup align="left" >	
+		<h:panelGrid columns="13" >	
+			<p:commandLink id="logo-daily" title="Hello Daily"><p:graphicImage styleClass="logo-daily" width="140" height="50" value="/resources/images/header/hello_daily_logo.png" /> </p:commandLink>
+			
+			<p:commandLink id="btn-link-left1" onclick="PF('editProfileDialog').show()" title="Utilisateur" styleClass="btn-link-left"><p:graphicImage styleClass="button" value="/resources/images/header/menu1.png"  height="35" width="35"  /></p:commandLink>			
+			<p:commandLink id="btn-link-left2" title="Réunion" styleClass="btn-link-left"><p:graphicImage styleClass="button" value="/resources/images/header/menu2.png"  height="35" width="35"/>  </p:commandLink>			
+			<p:commandLink id="btn-link-left3" title="Participant" styleClass="btn-link-left"><p:graphicImage styleClass="button" value="/resources/images/header/menu3.png"  height="35" width="35"/>  </p:commandLink>			
+			<p:commandLink id="btn-link-left4" title="Messages" styleClass="btn-link-left"><p:graphicImage styleClass="button" value="/resources/images/header/menu4.png"  height="30" width="30"/>  </p:commandLink>			
+			<p:commandLink id="btn-link-left5" title="forum" styleClass="btn-link-left"><p:graphicImage styleClass="button" value="/resources/images/header/menu8.png"  height="30" width="30"/>  </p:commandLink>
+		
+		<div class="clock btn-link-left">
+  			<div class="time">00:00:00</div>
+		</div>
+		</h:panelGrid>
+		</p:toolbarGroup>
+		 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+		<p:toolbarGroup align="right" >	
+		<h:panelGrid columns="5" >
+			<p:outputLabel value="Bienvenue #{contextBean.nomUtilisateur}" styleClass="clock" />
+			<p:commandLink  title="#{contextBean.nomUtilisateur}" styleClass="btn-link-right"><p:graphicImage styleClass="button" value="/resources/images/images.jpg"  height="30" width="30"  /></p:commandLink>			
+		<p:commandLink id="btn-link-right1" title="Paramétre" styleClass="btn-link-right"><p:graphicImage styleClass="button" value="/resources/images/header/menu7.png"  height="35" width="35"  /></p:commandLink>
+		<p:commandLink id="btn-link-right2" title="Bienvenue"  styleClass="btn-link-right"><p:graphicImage styleClass="button" value="/resources/images/header/menu5.png"  height="30" width="30"  /></p:commandLink>
+		<p:commandLink id="btn-link-right3" title="Deconnexion" action="#{loginController.doLogout()}" styleClass="btn-link-right"><p:graphicImage styleClass="button" style="margin-right:30px" value="/resources/images/header/menu6.png"  height="35" width="35"  /></p:commandLink>
+		</h:panelGrid>
+		</p:toolbarGroup>
+		
+		
+		
+		</p:toolbar>
+			
+		</h:form>
+	
+		<!-- /////////////////////////////////// diag user ajout /////////////////////////////////// -->
+	<p:dialog header="Votre profile" widgetVar="editProfileDialog" width="20%" 
+		appendTo="@(body)" showEffect="blind" hideEffect="explode" modal="true"
+		resizable="false">
+		<h:form id="formajout" enctype="multipart/form-data">
+			<p:panel id="panel">
+
+				<p:messages id="msgs" />
+				<center>
+					<h:panelGrid columns="1" id="panelphoto">
+						<p:outputPanel autoUpdate="true">
+							<h:graphicImage value="#{userBean.convertToFile(userBean.user)}"
+								width="120" id="upfile" height="120"
+								style="cursor:pointer;postion:absolute;-webkit-border-radius: 100px;-moz-border-radius: 100px;border-radius: 100px;"
+								onclick="$('.ui-photo').click();">
+							</h:graphicImage>
+						</p:outputPanel>
+						<p:fileUpload id="ui-photo" auto="true" styleClass="ui-photo" 	style="display:none"
+							fileUploadListener="#{userBean.handleFileUpload}" label="Photo"
+							mode="advanced" multiple="false" sizeLimit="10000000"
+							allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+					</h:panelGrid>
+				</center>
+				<h:panelGrid columns="3" cellpadding="5">
+					<p:outputLabel for="firstname" value="Firstname:" />
+			<p:inplace ><p:inputText id="firstname" value="#{userBean.user.firstName}" style="width:123px !important"
+						required="true" label="Firstname">
+						<f:validateLength minimum="3" />
+					</p:inputText></p:inplace>
+					<p:message for="firstname" display="icon" />
+
+					<p:outputLabel for="lastname" value="Lastname:" />
+				<p:inplace >	<p:inputText id="lastname" value="#{userBean.user.lastName}" style="width:123px !important"
+						label="Lastname" required="true">
+						<f:validateLength minimum="2" />
+						<p:ajax update="msgLastname" event="keyup" />
+					</p:inputText></p:inplace>
+					<p:message for="lastname" id="msgLastname" display="icon" />
+
+					<p:outputLabel for="phone" value="Phone:" />
+				<p:inplace ><p:inputMask id="phone" value="#{userBean.user.phoneNumber}" style="width:123px !important"
+						 required="false" /></p:inplace>
+					<p:message for="phone" id="msgphone" display="icon" />
+
+					<p:outputLabel for="email" value="Email: " />
+				<p:inplace >	<p:inputMask id="email" value="#{userBean.user.email}" style="width:123px !important"
+						 required="true" /></p:inplace>
+					<p:message for="email" id="emailid" display="icon" />
+
+
+
+				</h:panelGrid>
+
+<p:commandLink  value="changer votre mot de passe"  style="margin-bottom: 30px !important ;" styleClass="passeworld-linck mrg-down-30" />
+
+				<center class="mrg-top-30">
+					<h:panelGrid columns="3">
+						<p:commandButton value="Valider"
+							action="#{userBean.ajouterUser()}" update=":messages "
+							oncomplete="PF('editProfileDialog').hide()"></p:commandButton>
+						<p:commandButton value="Annuler"
+							oncomplete="PF('editProfileDialog').hide()"></p:commandButton>
+					</h:panelGrid>
+				</center>
+			</p:panel>
+		</h:form>
+	</p:dialog>
+	
+	<p:dialog id="diag_consult_users" header="Utilisateurs" width="60%" height="60%"
+		widgetVar="diag_consult_users" modal="true" resizable="false">
+		<h:form id="form_consult_users">
+		
+		<p:dataTable id="users" var="user" value="#{userBean.listUsers}" editable="true" style="margin-bottom:20px">
+       <f:facet name="header">
+           Utilisateurs
+       </f:facet>
+ 
+       <p:ajax event="rowEdit" listener="#{userBean.onRowEdit}" update=":messages" />
+       <p:ajax event="rowEditCancel" listener="#{userBean.onRowCancel}" update=":messages" />
+ 
+       <p:column headerText="Nom">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{user.firstName}" /></f:facet>
+               <f:facet name="input"><p:inputText id="modelInput" value="#{user.firstName}" style="width:100%"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+ 
+       <p:column headerText="Prenom">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{user.lastName}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{user.lastName}"  style="width:100%" label="prenom"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+ 
+       <p:column headerText="E-mail">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{user.email}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{user.email}"  style="width:100%" label="E-mail"/></f:facet>       
+           </p:cellEditor>
+       </p:column>
+       
+       <p:column headerText="N° Télephone">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{user.phoneNumber}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{user.phoneNumber}"  style="width:100%" label="N° Télephone"/></f:facet>       
+           </p:cellEditor>
+       </p:column>
+ 
+       <p:column style="width:32px">
+           <p:rowEditor />
+       </p:column>
+   </p:dataTable>
+ 
+		</h:form>
+		</p:dialog>
+		
+		<p:dialog id="diag_ajout_reunion" header="Démarrer une réunion" 
+		widgetVar="diag_ajout_reunion" modal="true" resizable="false">
+		<h:form id="form_ajout_reunion">
+		<center>
+		<h:panelGrid columns="1">
+		<p:outputLabel for="description_reunion" value="description:" />
+		
+				<p:inputTextarea id="description_reunion" rows="6" cols="33" maxlength="100" style="width:300px !important;margin-bottom:20px"
+					value="#{userBean.reunion.description}" />
+								
+				</h:panelGrid>
+				</center>
+				<p:pickList id="PojoPickList" value="#{userBean.dualListUser}" var="user"  effect="bounce"
+                itemValue="#{user}" itemLabel="#{user.firstName}"  showSourceControls="true" showTargetControls="true" showCheckbox="true" responsive="true"
+                showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="userConverter">
+ 
+        <f:facet name="sourceCaption">Available</f:facet>
+        <f:facet name="targetCaption">Starting</f:facet>
+ 
+        <p:ajax event="transfer" listener="#{userBean.onTransfer}" update=":messages" />
+       
+ 
+        <p:column style="width:10%">
+           <p:graphicImage value="#{userBean.convertToFile(user)}"	width="40px" height="40px" />
+        </p:column>
+ 
+        <p:column style="width:90%;">
+            <h:outputText value="#{user.firstName} #{user.lastName}" />
+        </p:column>
+    </p:pickList>
+    
+    	<center>
+				<p:commandButton value="Demarrer" style=" width:30%; margin-top:40px"
+					action="#{userBean.ajouterReunion()}" ajax="false"
+					update=":messages :formCenter "
+					onclick="PF('diag_ajout_reunion').hide() ">
+
+				</p:commandButton>
+				 <p:commandButton id="btn_reset_reunion" value="Reset" type="reset"/>
+				<p:commandButton value="Annuler" update=":formCenter"
+					style="margin-left:5px; width:30%;margin-top:40px" 
+					oncomplete="PF('diag_ajout_reunion').hide()" process="@this" />
+			</center>
+		</h:form>
+		</p:dialog>
+
+	</ui:composition>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	style="background-color: rgb(255, 255, 255) !important;width:100% !important;">
+
+
+	<h:head>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="edge, chrome=1" />
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+<!-- 		<h:outputStylesheet name="animation.css" library="css"/> -->
+<!-- 		<h:outputStylesheet name="home.css" library="css" /> -->
+<!-- 		<h:outputStylesheet name="login.css" library="css" /> -->
+			<h:outputStylesheet name="layout.css" library="css" />
+		<h:outputScript name="home1.js" library="js"></h:outputScript>
+		<h:outputStylesheet name="corner.css" library="css" />
+		<h:outputStylesheet name="header.css" library="css" />
+<h:outputScript name="corner.js" library="js"></h:outputScript>
+<h:outputScript name="header.js" library="js"></h:outputScript>
+
+		<title><ui:insert name="title">Monster</ui:insert></title>
+		
+	</h:head>
+	<h:body  >
+	<p:layout fullPage="true">
+				<p:growl id="messages" />
+				<p:layoutUnit position="center">
+					<ui:insert  name="content"  >Put default content here, if any.</ui:insert>
+			</p:layoutUnit>
+			
+		
+			
+			<p:layoutUnit position="west" size="235" header="Left"
+			resizable="false" collapsible="true">
+				<ui:insert name="west">
+					<ui:include src="./common/west.xhtml" />
+				</ui:insert>
+				</p:layoutUnit>
+		
+			
+			<p:layoutUnit position="east" size="235" header="Right"
+			resizable="false" collapsible="true">
+			
+				<ui:insert name="east">
+					<ui:include src="./common/east.xhtml" />
+				</ui:insert>
+		</p:layoutUnit>
+		
+		<p:layoutUnit position="north"  
+			resizable="false" collapsible="false">			
+				<ui:insert name="header">
+					<ui:include src="./common/header.xhtml" />
+				</ui:insert>
+		</p:layoutUnit>
+		
+		</p:layout>
+	</h:body>
+</html>

@@ -1,0 +1,42 @@
+.button:hover{	
+	-webkit-filter: blur(1px);
+-moz-filter: blur(1px);
+-o-filter: blur(1px);
+-ms-filter: blur(1px);
+
+filter: blur(1px);
+}
+
+
+.btn-link-left{
+	margin-left:15px
+}
+
+.btn-link-right{
+	margin-right:15px
+}
+
+.clock{
+	margin-right:20px;
+	font-size: 20px;
+	font-family: 'LearningCurveProRegular', Arial, serif;
+}
+
+.logo-daily{	
+	margin-left:40px;
+	margin-right:34px;
+    -ms-transform: rotate(-7deg); /* IE 9 */
+    -webkit-transform: rotate(-7deg); /* Chrome, Safari, Opera */
+    transform: rotate(-7deg);
+}
+
+.passeworld-linck{
+	
+    color: blue !important;
+	font-size: 16px;
+}
+
+.mrg-top-30{
+	margin-top: 30px !important ;
+}
+

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+
+</h:head>
+
+<ui:composition>
+	<h:form id="formheader">
+		<pe:tooltip global="true" position="top, center"
+			targetPosition="top, center" forSelector="aletetat" />
+		<p:toolbar>
+			<p:toolbarGroup align="left" style="margin-top:10px">
+				<p:clock
+					pattern="#{contextBean.param.dateFormat} HH:mm"
+					mode="server" />
+				<p:separator />
+			</p:toolbarGroup>
+
+			<p:toolbarGroup align="right">
+
+				<ui:repeat var="alert" value="#{alertBean.listalert}">
+					<a href="#{alert.getUrl()}"
+						style="display: block-inline; text-decoration: none"> <p:outputLabel
+							value="#{alert.nbalert}"
+							style="color:white;text-decoration: blink;width:30px;height:40px;font-size:9px !important;
+								background-color:red;padding:5px 5px 5px 5px; -moz-border-radius: 70px; 
+   -webkit-border-radius: 70px; 
+   border-radius: 70px;display:inline;vertical-align:middle;text-decoration: none !important;" />
+						<h:graphicImage value="#{alert.icon}" title="#{alert.description}"
+							styleClass="aletetat"
+							style="cursor:pointer;margin-right:15px;vertical-align:middle;"
+							width="10px" height="10px" onclick="#{alert.action}">
+						</h:graphicImage>
+					</a>
+				</ui:repeat>
+
+
+
+			</p:toolbarGroup>
+
+		</p:toolbar>
+		<!-- /////////////////////////// DIAG_notification ///////////onstart="jQuery('.ui-row-toggler').click()"//////////  -->
+
+	</h:form>
+	<p:dialog widgetVar="correctDiag" appendTo="@(body)" modal="true"
+		width="900" header="Correction des pointages" height="650">
+		<h:form id="form33" prependId="false">
+			<p:messages id="msg"></p:messages>
+			<p:dataTable var="mvt" value="#{alertBean.listMvtCorrect}" id="mvts"
+				editable="true" rows="10" paginator="true"
+				paginatorPosition="bottom">
+				<p:ajax event="rowEdit" 
+					listener="#{alertBean.onedit}" update="mvts" />
+				<p:column style="width:2%">
+					               <p:rowToggler />
+				</p:column>
+				<p:column headerText="Id sur Terminal" style="width:6%">
+					<h:outputText value="#{mvt.bckId}" />
+				</p:column>
+
+				<p:column headerText="Terminal">
+					<h:outputText value="#{mvt.terminaux.libelle}" />
+				</p:column>
+
+
+				<p:column headerText="Personnel" style="width:180px">
+					<p:cellEditor>
+
+						<f:facet name="output">
+							<h:outputText
+								value="#{mvt.personnel==null?'Inconnue':mvt.personnel.fullname}"></h:outputText>
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneMenu value="#{mvt.personnel}"
+								converter="personnelConverter" style="width:180px">
+								<f:selectItems value="#{alertBean.listPersonnels}" var="pers"
+									itemLabel="#{pers.fullname}" itemValue="#{pers}" />
+							</p:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column style="width:6%">
+					<p:rowEditor />
+				</p:column>
+				<p:rowExpansion>
+					<p:dataTable var="mvtd" value="#{mvt.listmvt}" id="mvtsd"
+						editable="true" rows="10" paginator="true"
+						paginatorPosition="bottom" paginatorAlwaysVisible="false">
+						<p:column headerText="Jour">
+							<h:outputText value="#{mvtd.jour}" />
+						</p:column>
+						<p:column headerText="Heure">
+							<h:outputText value="#{mvtd.heure}" />
+						</p:column>
+						<p:column headerText="Etat">
+							<h:graphicImage
+								value="#{mvtd.bcketat.equals('E')?'/resources/img/in.png':'/resources/img/out.png'}"
+								width="30" height="32" />
+						</p:column>
+						<p:column headerText="Moyen">
+							<h:outputText value="#{mvtd.moyen}" />
+						</p:column>
+					</p:dataTable>
+				</p:rowExpansion>
+			</p:dataTable>
+			<p:commandButton value="Valider" type="submit" icon="accept"
+				oncomplete="correctDiag.hide()" action="#{alertBean.insertMVt}"></p:commandButton>
+			<p:commandButton value="Annuler" icon="cancel"
+				oncomplete="correctDiag.hide()"></p:commandButton>
+				
+		</h:form>
+
+	</p:dialog>
+<p:idleMonitor timeout="30000">
+        <p:ajax event="idle" oncomplete="lock.show()" />
+		</p:idleMonitor>
+		<p:dialog id="locks" appendTo="@(body)" widgetVar="lock" modal="true"
+			showEffect="clip" hideEffect="blind" width="100%" height="100%"
+			style="background-image:url('${request.contextPath}/resources/img/lock.jpeg')">
+			<div style="width: 100%; height: 100%; overflow: hidden;"
+				onclick="PF('lock').hide()" onkeydown="PF('lock').hide()">
+
+				<div id="clock2">
+					<p:clock pattern="MMMM dd, yyyy"></p:clock>
+				</div>
+				<div id="clock">
+					<p:clock pattern="HH:mm"></p:clock>
+				</div>
+			</div>
+		</p:dialog>
+		<p:dialog appendTo="@(body)" widgetVar="diag" modal="true"
+			showEffect="blind" hideEffect="blind">
+			<h:form id="formimportg">
+				<p:messages id="msg"></p:messages>
+				<h:panelGrid columns="2" cellpadding="8" cellspacing="5">
+					<p:outputLabel value="Source :"></p:outputLabel>
+					<p:selectOneMenu value="#{importBean.terminaux}"
+						converter="terminauxConverter">
+						<f:selectItems value="#{importBean.listTerminaux}" var="ter"
+							itemLabel="#{ter.libelle} #{ter.type}" itemValue="#{ter}" />
+					</p:selectOneMenu>
+					<p:outputLabel value="File :"></p:outputLabel>
+					<p:fileUpload id="file" dragDropSupport="true"
+						fileUploadListener="#{importBean.handleFileUpload}"
+						label="Fichier" uploadLabel="Charger" update="msg"
+						cancelLabel="Annuler" mode="advanced" multiple="true"
+						sizeLimit="10000000" allowTypes="/(\.|\/)(dat|xml|csv)$/" />
+				</h:panelGrid>
+				<p:commandButton value="Importer" action="#{importBean.uplodatMvt}"
+					update="msg" oncomplete="diag.hide()"></p:commandButton>
+				<p:commandButton value="Annuler" oncomplete="diag.hide()"></p:commandButton>
+			</h:form>
+		</p:dialog>
+</ui:composition>
+</html>
