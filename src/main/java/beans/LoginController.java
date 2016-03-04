@@ -17,6 +17,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
@@ -38,6 +39,7 @@ public class LoginController {
  
     public String doLogin() throws IOException, ServletException {
     	try {
+    		// test //
         ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
         RequestDispatcher dispatcher = ((ServletRequest) context.getRequest()).getRequestDispatcher("/j_spring_security_check");
         dispatcher.forward((ServletRequest) context.getRequest(), (ServletResponse) context.getResponse());
@@ -54,11 +56,11 @@ public class LoginController {
 
         RequestDispatcher dispatcher = ((ServletRequest) context.getRequest())
                 .getRequestDispatcher("/logout");
-
+    
         dispatcher.forward((ServletRequest) context.getRequest(),
                 (ServletResponse) context.getResponse());
-
         FacesContext.getCurrentInstance().responseComplete();
         System.out.println("End doLogout()");
-        return null;}
+ 
+        return "/login";}
 }
