@@ -34,7 +34,7 @@ http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 			authentication-failure-url="/login.xhtml?fail" default-target-url="/pages/container.xhtml"
 			always-use-default-target="true"
 			username-parameter="username" password-parameter="password" />
-			<security:logout logout-success-url="/login" logout-url="/login"  delete-cookies="JSESSIONID"  />
+			<security:logout logout-success-url="/login.xhtml" logout-url="/login"  delete-cookies="JSESSIONID"  />
 	</security:http>
 	
 	
