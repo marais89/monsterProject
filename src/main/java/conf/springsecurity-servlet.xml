@@ -17,7 +17,7 @@ http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 	<security:http pattern="/SignUp.xhtml*" security="none" />
 
 
-	<security:http use-expressions="true">
+	<security:http auto-config='true'>
 		<!-- refers to http://docs.spring.io/spring-security/site/docs/3.0.x/reference/el-access.html -->
 		<security:intercept-url pattern="/login.xhtml"
 			access="anonymous" />
@@ -31,10 +31,10 @@ http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 		<security:intercept-url pattern="/**" access="authenticated" />
 		<security:form-login login-page="/login.xhtml" 
 			login-processing-url="/j_spring_security_check" 
-			authentication-failure-url="/login.xhtml" default-target-url="/pages/container.xhtml"
+			authentication-failure-url="/login.xhtml?fail" default-target-url="/pages/container.xhtml"
 			always-use-default-target="true"
 			username-parameter="username" password-parameter="password" />
-			<security:logout logout-success-url="/login.xhtml" delete-cookies="JSESSIONID"  />
+			<security:logout logout-success-url="/login" logout-url="/login"  delete-cookies="JSESSIONID"  />
 	</security:http>
 	
 	
