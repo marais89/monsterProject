@@ -13,28 +13,30 @@ http://www.springframework.org/schema/security
 http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
 	<security:http pattern="/resources/**" security="none" />
-	<security:http pattern="/login.xhtml*" security="none" />
-	<security:http pattern="/SignUp.xhtml*" security="none" />
+	<security:http pattern="/SignUp.xhtml" security="none"  />
 
-
-	<security:http use-expressions="true">
+	<security:http auto-config='true'>
 		<!-- refers to http://docs.spring.io/spring-security/site/docs/3.0.x/reference/el-access.html -->
 		<security:intercept-url pattern="/login.xhtml"
+			access="permitAll" />
+			<security:intercept-url pattern="/forgetPassword.xhtml"
+			access="permitAll" />
+			<security:intercept-url pattern="/SignUp.xhtml"
 			access="anonymous" />
 		<security:intercept-url pattern="/resources/**"
-			access="anonymous" />
+			access="permitAll" />
 		<security:csrf disabled="true" />
-		<security:intercept-url pattern="/j_spring_security_check"
-			access="anonymous" />
-			<security:intercept-url pattern="/j_spring_security_logout"
-			access="anonymous" />
+<!-- 		<security:intercept-url pattern="/j_spring_security_check" -->
+<!-- 			access="anonymous" /> -->
+<!-- 			<security:intercept-url pattern="/j_spring_security_logout" -->
+<!-- 			access="anonymous" /> -->
 		<security:intercept-url pattern="/**" access="authenticated" />
 		<security:form-login login-page="/login.xhtml" 
 			login-processing-url="/j_spring_security_check" 
-			authentication-failure-url="/login.xhtml" default-target-url="/pages/container.xhtml"
+			authentication-failure-url="/login.xhtml?fail" default-target-url="/pages/container.xhtml"
 			always-use-default-target="true"
 			username-parameter="username" password-parameter="password" />
-			<security:logout logout-success-url="/login.xhtml" delete-cookies="JSESSIONID"  />
+			<security:logout logout-success-url="/login.xhtml"/>
 	</security:http>
 	
 	
