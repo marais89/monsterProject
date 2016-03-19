@@ -59,7 +59,7 @@
 		 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 		<p:toolbarGroup align="right" >	
 		<h:panelGrid columns="5" >
-			<p:outputLabel value="Bienvenue #{contextBean.nomUtilisateur}" styleClass="clock" />
+			<p:outputLabel value="Bienvenue #{contextBean.name}" styleClass="clock" />
 			<p:commandLink  title="#{contextBean.nomUtilisateur}" styleClass="btn-link-right"><p:graphicImage styleClass="button" value="/resources/images/images.jpg"  height="30" width="30"  /></p:commandLink>			
 		<p:commandLink id="btn-link-right1" title="Paramétre" styleClass="btn-link-right"><p:graphicImage styleClass="button" value="/resources/images/header/menu7.png"  height="35" width="35"  /></p:commandLink>
 		<p:commandLink id="btn-link-right2" title="Bienvenue"  styleClass="btn-link-right"><p:graphicImage styleClass="button" value="/resources/images/header/menu5.png"  height="30" width="30"  /></p:commandLink>

@@ -20,22 +20,46 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Users;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.slf4j.helpers.Util;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.jsf.FacesContextUtils;
 
+import dao.UsersDao;
+
 
 @ManagedBean
 @RequestScoped
 public class LoginController {
+	
+	@Autowired
+	public UsersDao userDao;
+	public String login ;
+	
+	public void verifyLogin(){
+//		Users u = userDao.getUserByLogin(login);
+//		try{	
+//			if (u == null){
+//				throw new UsernameNotFoundException("user not found");
+//				}
+//			else{
+				System.out.println("#########   login correct ");
+//			}
+//		} catch (Exception e) {
+//			System.out.println("########## exception lors de verifyLogin");
+//		}
+	}
  
     public String doLogin() throws IOException, ServletException {
     	try {
@@ -61,5 +85,22 @@ public class LoginController {
         FacesContext.getCurrentInstance().responseComplete();
         System.out.println("End doLogout()");
  
-        return "/login";}
+        return null;}
+
+	public String getLogin() {
+		return login;
+	}
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public UsersDao getUserDao() {
+		return userDao;
+	}
+
+	public void setUserDao(UsersDao userDao) {
+		this.userDao = userDao;
+	}
+    
+    
 }

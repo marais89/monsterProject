@@ -25,10 +25,10 @@
 				<p:commandButton value="BTN Commande" style="width:150px" ></p:commandButton>
 				</h:panelGrid>
 				<p:panel >
-			<p:poll id="poll" interval="1" update=":formCenter:imageReunion :formCenter:compteur :formCenter:pangridDetail " >
+		
 		<p:graphicImage id="imageReunion" value="#{userBean.photo}" width="200px" height="250px" ></p:graphicImage>
 		  <p:progressBar value="#{userBean.pourcentage}" id="compteur" labelTemplate="#{userBean.pourcentage}%" displayOnly="true" style="width:200px" />
-		</p:poll>
+		
 		</p:panel>
 		<h:panelGrid id="pangridDetail" columns="2" >
 		<p:outputLabel value="Nom : " />

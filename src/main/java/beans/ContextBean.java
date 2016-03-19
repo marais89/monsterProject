@@ -13,6 +13,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 import org.primefaces.model.DualListModel;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import service.UsersService;
 import model.Actions;
@@ -31,6 +33,10 @@ public class ContextBean implements Serializable {
 	private String nomUtilisateur="Mohamed Ali";
 	private Users connectedUser;
 	private boolean bolSign=true;
+	
+	
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    String name = auth.getName(); //get logged in username
 	
 	
 	@ManagedProperty(value = ("#{usersServiceImpl}"))
@@ -101,6 +107,14 @@ public class ContextBean implements Serializable {
 
 	public void setBolSign(boolean bolSign) {
 		this.bolSign = bolSign;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	

@@ -177,6 +177,7 @@ public class UserBean implements Serializable {
 	public void ajouterUser() {
 		try {
 			user.setRole("admin");
+			user.setStat("active");
 			user.setPassword(encoder.encode(this.user.getPassword()));
 			usersService.addUser(user);
 			FacesMessage msg = new FacesMessage(
@@ -185,9 +186,11 @@ public class UserBean implements Serializable {
 			this.user = new Users();
 		} catch (Exception e) {
 			FacesMessage msg = new FacesMessage("Erreur");
+			System.out.println("### votre erreur est : "+e);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			e.getMessage();
 		}
+		System.out.println("ajout user test test ...");
 	}
 
 	public void handleFileUpload(FileUploadEvent event) {
@@ -233,6 +236,7 @@ public class UserBean implements Serializable {
 	public String convertToFile(Users p) {
 		String PhotoName = p.getFirstName() + "" + p.getLastName();
 		if (p.getPhoto() != null) {
+			System.out.println("######### photo "+p.getPhoto());
 			try {
 				ExternalContext externalContext = FacesContext
 						.getCurrentInstance().getExternalContext();
