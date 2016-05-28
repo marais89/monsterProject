@@ -10,10 +10,12 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=5,8,9" />
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" type="text/css" href="resources/css/login.css"></link>
+	<link rel="stylesheet" type="text/css" href="resources/css/messages.css"></link>
 	<h:outputScript name="login.js" library="js"></h:outputScript>
 </h:head>
 <h:body>
 <h:form id="formSignUn" >
+<p:outputLabel id="msg" styleClass="error" rendered="#{userBean.bolMsg}" >Erreur de création</p:outputLabel>
 <p:messages id="messages" />
 <p:growl id="message" />
 <a  href="/monster/login.xhtml" class="signup">Sign In</a>

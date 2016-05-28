@@ -27,6 +27,7 @@ import service.ParticipationService;
 import service.ReunionService;
 import service.UsersService;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
@@ -64,6 +65,8 @@ public class UserBean implements Serializable {
 	private int increment=0;
 	private int pourcentage=0;
 	private String photo="/resources/images/line.jpg";
+	private String msg= "XXX";
+	private boolean bolMsg=false;
 	
 	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -180,15 +183,15 @@ public class UserBean implements Serializable {
 			user.setStat("active");
 			user.setPassword(encoder.encode(this.user.getPassword()));
 			usersService.addUser(user);
-			FacesMessage msg = new FacesMessage(
-					"utilisateur ajouté avec succées");
+			FacesMessage msg = new FacesMessage("utilisateur ajouté avec succées");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			this.user = new Users();
 		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage("Erreur");
-			System.out.println("### votre erreur est : "+e);
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-			e.getMessage();
+			this.bolMsg=true;
+			RequestContext.getCurrentInstance().update("formSignUn:msg");
+		//	FacesMessage msg = new FacesMessage("Erreur");
+		//	FacesContext.getCurrentInstance().addMessage(null, msg);
+		//	e.getMessage();
 		}
 		System.out.println("ajout user test test ...");
 	}
@@ -460,6 +463,22 @@ public class UserBean implements Serializable {
 
 	public void setPourcentage(int pourcentage) {
 		this.pourcentage = pourcentage;
+	}
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+
+	public boolean isBolMsg() {
+		return bolMsg;
+	}
+
+	public void setBolMsg(boolean bolMsg) {
+		this.bolMsg = bolMsg;
 	}
 	
 	

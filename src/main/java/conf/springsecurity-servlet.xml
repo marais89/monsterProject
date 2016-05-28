@@ -41,9 +41,11 @@ http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 	
 	
 	<b:bean id="userDetailsService" class="service.UserDetailsServiceImpl"></b:bean>
+	<b:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	
 	<security:authentication-manager>
 		<security:authentication-provider user-service-ref="userDetailsService">
+		<security:password-encoder ref="encoder"></security:password-encoder>
 		</security:authentication-provider>
 	</security:authentication-manager>
 
