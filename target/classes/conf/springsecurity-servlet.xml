@@ -37,8 +37,7 @@ http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 			always-use-default-target="true"
 			username-parameter="username" password-parameter="password" />
 			<security:logout logout-success-url="/login.xhtml"/>
-	</security:http>
-	
+	</security:http>	
 	
 	<b:bean id="userDetailsService" class="service.UserDetailsServiceImpl"></b:bean>
 	<b:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
@@ -48,27 +47,5 @@ http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 		<security:password-encoder ref="encoder"></security:password-encoder>
 		</security:authentication-provider>
 	</security:authentication-manager>
-
-<!-- 	 <security:authentication-manager>  -->
-<!-- 	 <security:authentication-provider>  -->
-<!-- 	 <security:jdbc-user-service  -->
-<!-- 	 data-source-ref="dataSource"  -->
-<!-- 	users-by-username-query="select email,password,stat from users where  -->
-<!-- 		email=?"   -->
-<!-- 	authorities-by-username-query="select email, role from users where  -->
-<!-- 		email=?" /> -->
-<!-- 	 </security:authentication-provider> -->
-<!-- 	 </security:authentication-manager>  -->
-
-<!-- 	<security:authentication-manager> -->
-<!-- 		<security:authentication-provider> -->
-<!-- 			<security:user-service> -->
-<!-- 				<security:user name="mohamedali.raies@sofrecom.com" -->
-<!-- 					password="azerty123" authorities="ROLE_USER, ROLE_ADMIN" /> -->
-<!-- 				<security:user name="bob" password="bobspassword" -->
-<!-- 					authorities="ROLE_USER" /> -->
-<!-- 			</security:user-service> -->
-<!-- 		</security:authentication-provider> -->
-<!-- 	</security:authentication-manager> -->
 
 </beans>
