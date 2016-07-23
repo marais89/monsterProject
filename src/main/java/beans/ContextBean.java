@@ -13,8 +13,10 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 import org.primefaces.model.DualListModel;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 
 import service.UsersService;
 import model.Actions;
@@ -30,13 +32,12 @@ import model.Users;
 public class ContextBean implements Serializable {
 	
 	private String content ="/pages/home.xhtml";
-	private String nomUtilisateur="Mohamed Ali";
+	private String currentUserName;
 	private Users connectedUser;
 	private boolean bolSign=true;
 	
-	
-	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    String name = auth.getName(); //get logged in username
+    //String name = auth.getName(); //get logged in username
+	//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	
 	
 	@ManagedProperty(value = ("#{usersServiceImpl}"))
@@ -77,14 +78,6 @@ public class ContextBean implements Serializable {
 		this.content = content;
 	}
 
-	public String getNomUtilisateur() {
-		return nomUtilisateur;
-	}
-
-	public void setNomUtilisateur(String nomUtilisateur) {
-		this.nomUtilisateur = nomUtilisateur;
-	}
-
 	public Users getConnectedUser() {
 		return connectedUser;
 	}
@@ -109,14 +102,18 @@ public class ContextBean implements Serializable {
 		this.bolSign = bolSign;
 	}
 
-	public String getName() {
-		return name;
+	public String getCurrentUserName() {
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+		    currentUserName = auth.getName();		 
+		}
+		return currentUserName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCurrentUserName(String currentUserName) {
+		this.currentUserName = currentUserName;
 	}
-	
 	
 
 }

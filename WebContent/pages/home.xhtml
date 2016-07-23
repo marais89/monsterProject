@@ -16,39 +16,7 @@
 		<h:form id="formCenter">
 
 
-				<center  style="mrg-top-30">
-				<h:panelGrid columns="3" >
-				<h:panelGrid columns="1" >
-				<p:commandButton value="BTN Commande" style="width:150px" ></p:commandButton>
-				<p:commandButton value="BTN Commande" style="width:150px" ></p:commandButton>
-				<p:commandButton value="BTN Commande" style="width:150px" ></p:commandButton>
-				<p:commandButton value="BTN Commande" style="width:150px" ></p:commandButton>
-				</h:panelGrid>
-				<p:panel >
-		
-		<p:graphicImage id="imageReunion" value="#{userBean.photo}" width="200px" height="250px" ></p:graphicImage>
-		  <p:progressBar value="#{userBean.pourcentage}" id="compteur" labelTemplate="#{userBean.pourcentage}%" displayOnly="true" style="width:200px" />
-		
-		</p:panel>
-		<h:panelGrid id="pangridDetail" columns="2" >
-		<p:outputLabel value="Nom : " />
-		<p:outputLabel value="#{userBean.user.lastName} " />
-			<p:outputLabel value="prénom : " />
-			<p:outputLabel value="#{userBean.user.firstName}" />
-				<p:outputLabel value="Poste : " />
-				<p:outputLabel value="Développeur" />
-					<p:outputLabel value="E-mail : " />
-					<p:outputLabel value="#{userBean.user.email}" />
 				
-				</h:panelGrid>
-		</h:panelGrid>
-		</center>
-				<div>
-					<center>
-						<h1 id="time1"></h1>
-					</center>
-				</div>
-
 </h:form>
 </body>
 </html>
