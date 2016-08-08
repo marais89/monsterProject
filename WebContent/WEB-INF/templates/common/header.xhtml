@@ -15,7 +15,7 @@
 <body>
 	<ui:composition>
 		<h:form id="formheader">
-		
+	
 		<div class="menu-outer" >
     <div class="menu-icon">
         <div class="bar"></div>
@@ -45,11 +45,12 @@
 		<h:panelGrid columns="13" >	
 			<p:commandLink id="logo-daily" title="Hello Daily"><p:graphicImage styleClass="logo-daily" width="140" height="50" value="/resources/images/header/hello_daily_logo.png" /> </p:commandLink>
 			
-			<p:commandLink id="btn-link-left1" onclick="PF('editProfileDialog').show()" title="Utilisateur" styleClass="btn-link-left"><p:graphicImage styleClass="button" value="/resources/images/header/menu1.png"  height="35" width="35"  /></p:commandLink>			
-			<p:commandLink id="btn-link-left2" title="Réunion" styleClass="btn-link-left"><p:graphicImage styleClass="button" value="/resources/images/header/menu2.png"  height="35" width="35"/>  </p:commandLink>			
-			<p:commandLink id="btn-link-left3" title="Participant" styleClass="btn-link-left"><p:graphicImage styleClass="button" value="/resources/images/header/menu3.png"  height="35" width="35"/>  </p:commandLink>			
-			<p:commandLink id="btn-link-left4" title="Messages" styleClass="btn-link-left"><p:graphicImage styleClass="button" value="/resources/images/header/menu4.png"  height="30" width="30"/>  </p:commandLink>			
-			<p:commandLink id="btn-link-left5" title="forum" styleClass="btn-link-left"><p:graphicImage styleClass="button" value="/resources/images/header/menu8.png"  height="30" width="30"/>  </p:commandLink>
+			<h:commandLink id="btn-link-left1" action="#{contextBean.toHome()}" update=":formContent" title="Home" styleClass="btn-link-left"><p:graphicImage styleClass="button" value="/resources/images/header/home-Page.png"  height="30" width="35"/> </h:commandLink>	
+			<h:commandLink id="btn-link-left2" action="#{contextBean.toUsers()}" update=":formContent" title="Utilisateur" styleClass="btn-link-left"><p:graphicImage styleClass="button" value="/resources/images/header/multiple-users.png"  height="35" width="35"  /></h:commandLink>			
+			<h:commandLink id="btn-link-left3" action="#{contextBean.toDevices()}" update=":formContent" title="Devices" styleClass="btn-link-left"><p:graphicImage styleClass="button" value="/resources/images/header/devices.png"  height="30" width="35"/> </h:commandLink>			
+			<h:commandLink id="btn-link-left4" action="#{contextBean.toInOut()}" update=":formContent" title="checkIn checkOut" styleClass="btn-link-left"><p:graphicImage styleClass="button" value="/resources/images/header/inout.png"  height="35" width="35"/></h:commandLink>		
+			<h:commandLink id="btn-link-left5" action="#{contextBean.toMessages()}" update=":formContent" title="Messages" styleClass="btn-link-left"><p:graphicImage styleClass="button" value="/resources/images/header/menu4.png"  height="30" width="30"/></h:commandLink>		
+			<h:commandLink id="btn-link-left6" action="#{contextBean.toForum()}" update=":formContent" title="forum" styleClass="btn-link-left"><p:graphicImage styleClass="button" value="/resources/images/header/menu8.png"  height="30" width="30"/> </h:commandLink>
 		
 		<div class="clock btn-link-left">
   			<div class="time">00:00:00</div>
@@ -206,7 +207,7 @@
         <f:facet name="sourceCaption">Available</f:facet>
         <f:facet name="targetCaption">Starting</f:facet>
  
-        <p:ajax event="transfer" listener="#{userBean.onTransfer}" update=":messages" />
+        <p:ajax event="transfer" listener="#{userBean.onTransfer}" />
        
  
         <p:column style="width:10%">
@@ -221,12 +222,11 @@
     	<center>
 				<p:commandButton value="Demarrer" style=" width:30%; margin-top:40px"
 					action="#{userBean.ajouterReunion()}" ajax="false"
-					update=":messages :formCenter "
 					onclick="PF('diag_ajout_reunion').hide() ">
 
 				</p:commandButton>
 				 <p:commandButton id="btn_reset_reunion" value="Reset" type="reset"/>
-				<p:commandButton value="Annuler" update=":formCenter"
+				<p:commandButton value="Annuler"
 					style="margin-left:5px; width:30%;margin-top:40px" 
 					oncomplete="PF('diag_ajout_reunion').hide()" process="@this" />
 			</center>

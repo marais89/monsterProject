@@ -100,7 +100,6 @@ public class UserBean implements Serializable {
 
 	public void onRowEdit(RowEditEvent event) {
 		try {
-
 			usersService.updateUsers((Users) event.getObject());
 			FacesMessage msg = new FacesMessage(
 					"Modification effectué avec succées");
