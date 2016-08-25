@@ -12,6 +12,50 @@
 	<h:outputStylesheet name="newstyle.css" library="scss"/>
 </h:head>
 <body>
-
+<h:form id="formCenter">
+ <p:growl id="msgs" showDetail="true"/>
+	 <p:dataTable id="devices" var="devices" value="#{deviceBean.listDevices}" editable="true" style="margin-bottom:20px">
+       <f:facet name="header">
+           Row Editing
+       </f:facet>
+       
+ 	   <p:ajax event="rowEdit" listener="#{deviceBean.onRowEdit}" update=":formContent:formCenter:msgs" />
+       <p:ajax event="rowEditCancel" listener="#{deviceBean.onRowCancel}" update=":formContent:formCenter:msgs" />
+       
+       <p:column headerText="Nom">    
+       <p:cellEditor>      
+               <f:facet name="output"><h:outputText value="#{devices.nom}" /> </f:facet>   
+                 <f:facet name="input"><p:inputText value="#{devices.nom}" style="width:100%"/></f:facet>                 
+        </p:cellEditor>              
+       </p:column>
+ 
+       <p:column headerText="Type">
+       <p:cellEditor>
+                 <f:facet name="output"><h:outputText value="#{devices.type}" /></f:facet>
+                 <f:facet name="input"><p:inputText value="#{devices.type}" style="width:100%"/></f:facet>
+       </p:cellEditor>
+       </p:column>
+ 
+       <p:column headerText="OS">
+        <p:cellEditor> 
+          		  <f:facet name="output"><h:outputText value="#{devices.OS}" /></f:facet>
+          		  <f:facet name="input"><p:inputText value="#{devices.OS}" style="width:100%"/></f:facet>
+       		</p:cellEditor>
+       </p:column>
+ 
+       <p:column headerText="Description">
+        <p:cellEditor> 
+                <f:facet name="output"><h:outputText value="#{devices.description}" /></f:facet>
+                <f:facet name="input"><p:inputText value="#{devices.description}" style="width:100%"/></f:facet>
+      		</p:cellEditor>
+       </p:column>
+       
+       <p:column style="width:32px">
+           <p:rowEditor />
+       </p:column>
+ 
+   </p:dataTable>
+   
+   </h:form>
 </body>
 </html>
