@@ -65,10 +65,8 @@ public class DevicesDaoImpl implements DevicesDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Devices> findAllDevices() {
-System.out.println("avant dao");
 		List<Devices> l = new ArrayList<Devices>();
 		l = session.getCurrentSession().createQuery("from Devices").list();
-		System.out.println("apres dao...");
 		return l;
 	}
 
